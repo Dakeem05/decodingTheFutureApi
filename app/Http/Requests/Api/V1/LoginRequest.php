@@ -2,12 +2,11 @@
 
 namespace App\Http\Requests\Api\V1;
 
-use App\Models\EventRegistration;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
 
-class EventRegistrationVerifyRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +24,9 @@ class EventRegistrationVerifyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'otp' => ['required', 'digits:6',],
-            'email' => ['required', 'string', 'email',],
+            'username' => ['required'],
+            // 'email' => ['required'],
+            'password' => ['required'],
         ];
     }
 

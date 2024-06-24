@@ -22,7 +22,7 @@ class EventRegistrationController extends Controller
 
         $request = $auth_service->register($_data);
         
-        return $this->successResponse("Check your email for your otp.", 201);
+        return $this->successResponse(true, "Check your email for your otp.", 201);
     }
 
     public function verify (EventRegistrationVerifyRequest $request, EventRegistrationService $auth_service)

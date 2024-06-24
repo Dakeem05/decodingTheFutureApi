@@ -2,12 +2,13 @@
 
 namespace App\Http\Requests\Api\V1;
 
-use App\Models\EventRegistration;
+use App\Models\User;
 use Illuminate\Contracts\Validation\Validator;
 use Illuminate\Foundation\Http\FormRequest;
 use Illuminate\Http\Exceptions\HttpResponseException;
+use Illuminate\Validation\Rules;
 
-class EventRegistrationVerifyRequest extends FormRequest
+class RegisterUserRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -25,8 +26,11 @@ class EventRegistrationVerifyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'otp' => ['required', 'digits:6',],
-            'email' => ['required', 'string', 'email',],
+            'email' => ['required', 'string', 'email', 'max:191', 'unique:'.User::class],
+            'name' => ['required', 'string',],
+            'username' => ['sometimes', 'string', 'min:6','unique:'.User::class],
+            'referrer_code' => ['sometimes', 'string', 'exists:users,referral_code'],
+            'password' => ['required', Rules\Password::defaults()],
         ];
     }
 

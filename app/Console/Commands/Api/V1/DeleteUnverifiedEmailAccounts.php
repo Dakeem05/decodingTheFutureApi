@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Console\Commands\ApiV1;
+namespace App\Console\Commands\Api\V1;
 
 use App\Models\EventRegistration;
 use Carbon\Carbon;
