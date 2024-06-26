@@ -11,12 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_points', function (Blueprint $table) {
+        Schema::create('quests', function (Blueprint $table) {
             $table->id();
             $table->uuid()->index();
-            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->unsignedBigInteger('point')->default(0);
-            $table->timestamp('last_claim_at')->nullable();
+            $table->string('name');
+            $table->longText('description');
+            $table->unsignedBigInteger('point');
+            $table->string('link');
             $table->softDeletes()->index();
             $table->timestamps();
         });
@@ -27,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_points');
+        Schema::dropIfExists('quests');
     }
 };

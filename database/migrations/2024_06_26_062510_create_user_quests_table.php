@@ -11,12 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('user_points', function (Blueprint $table) {
+        Schema::create('user_quests', function (Blueprint $table) {
             $table->id();
             $table->uuid()->index();
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
-            $table->unsignedBigInteger('point')->default(0);
-            $table->timestamp('last_claim_at')->nullable();
+            $table->foreignId('quest_id')->constrained('quests')->cascadeOnDelete();
+            $table->string('proof')->nullable();
             $table->softDeletes()->index();
             $table->timestamps();
         });
@@ -27,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('user_points');
+        Schema::dropIfExists('user_quests');
     }
 };

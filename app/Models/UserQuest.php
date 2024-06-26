@@ -7,16 +7,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
-class UserPoint extends Model
+class UserQuest extends Model
 {
     use HasFactory, CreateUuid, SoftDeletes;
 
     protected $guarded = [];
     
-    protected $casts = [
-        'last_claim_at' => "datetime"
-    ];
-
     protected $hidden = [
         'created_at',
         'updated_at',

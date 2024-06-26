@@ -26,7 +26,7 @@ class EventRegistrationRequest extends FormRequest
         return [
             'name' => ['required', 'string',],
             'email' => ['required', 'string', 'email', 'unique:'.EventRegistration::class],
-            'phone' => ['required', 'digits:10', 'unique:'.EventRegistration::class],
+            'phone' => ['required', 'digits:11', 'unique:'.EventRegistration::class],
         ];
     }
 
