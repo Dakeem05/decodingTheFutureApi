@@ -26,6 +26,7 @@ class AuthenticationService
         if ($referral_code == null) {
             return $this->serverErrorResponse('An error occured');
         }
+        
         $user = User::create([
             'username' => isset($user_data->username) ? $user_data->username : null,
             'email' => $user_data->email,

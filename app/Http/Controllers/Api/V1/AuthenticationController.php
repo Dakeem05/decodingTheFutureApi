@@ -8,6 +8,7 @@ use App\Http\Requests\Api\V1\ForgotPasswordRequest;
 use App\Http\Requests\Api\V1\LoginRequest;
 use App\Http\Requests\Api\V1\RegisterUserRequest;
 use App\Http\Requests\Api\V1\VerifyForgotPassword;
+use App\Models\User;
 use App\Services\Api\V1\AuthenticationService;
 use App\Traits\Api\V1\ApiResponseTrait;
 use Illuminate\Http\Request;
@@ -131,7 +132,7 @@ class AuthenticationController extends Controller
 
     public function getUser()
     {
-        $user = Auth::user();
+        $user = User::where('id', auth()->user()->id)->with('point')->first();
 
         if ($user) {
             return $this->successResponse(['user' => $user], 'User data', 200);
