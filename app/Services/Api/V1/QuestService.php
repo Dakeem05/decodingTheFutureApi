@@ -16,7 +16,8 @@ class QuestService
             'name' => $data->name,
             'description' => $data->description,
             'point' => $data->point,
-            'link' => $data->link
+            'link' => $data->link,
+            'requirement' => $data->requirement,
         ]);
 
         return $quest;

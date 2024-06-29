@@ -27,6 +27,7 @@ class QuestCreationRequest extends FormRequest
             'name' => ['required','string'],
             'description' => ['string'],
             'point' => ['numeric', 'required'],
+            'requirement' => ['required', 'string'],
             'link' => ['required', 'string']
         ];
     }

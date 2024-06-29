@@ -18,6 +18,7 @@ return new class extends Migration
             $table->longText('description');
             $table->unsignedBigInteger('point');
             $table->string('link');
+            $table->string('requirement');
             $table->softDeletes()->index();
             $table->timestamps();
         });
