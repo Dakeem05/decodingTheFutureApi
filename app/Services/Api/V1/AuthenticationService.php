@@ -134,7 +134,7 @@ class AuthenticationService
     }
 
 
-    private function rewardReferrer(string $referrer_code, int $amount = 2500)
+    private function rewardReferrer(string $referrer_code, int $amount = 2000)
     {
         $user = User::where('referral_code', $referrer_code)->first();
         $wallet = UserPoint::where('user_id', $user->id)->first();
