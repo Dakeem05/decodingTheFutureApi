@@ -20,7 +20,7 @@ class QuestController extends Controller
      */
     public function index()
     {
-        $quests = Quest::all();
+        $quests = Quest::orderBy('point', 'desc')->get();
         $user_id = auth()->user()->id;
         $data = [];
         foreach ($quests as $quest) {
