@@ -36,4 +36,4 @@ jobs:
       # - name: Migrate Database
       #   run: php artisan migrate
       # - name: Serve the app
-        # run: php artisan serve
+      #   run: php artisan serve

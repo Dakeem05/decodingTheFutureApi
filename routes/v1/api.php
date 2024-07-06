@@ -50,4 +50,5 @@ Route::middleware('auth:api')->group(function () {
     Route::get('quest-submission', [QuestController::class, 'submissions']);
     Route::get('quest-submission/{proof}', [QuestController::class, 'submissionsSearch']);
     Route::get('recede-event-quest', [QuestController::class, 'eventRegistration']);
+    Route::get('recede-referrals', [LeaderboardController::class, 'check']);
 });

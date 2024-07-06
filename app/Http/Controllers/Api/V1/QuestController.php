@@ -83,12 +83,12 @@ class QuestController extends Controller
         $_data = (Object) $request->validated();
 
         $request = $questService->submit($_data, auth()->user()->id);
-        
-        if ($request == true) {
+        // return $request;
+        if ($request === "undone") {
+            return $this->errorResponse("Quest not done, smart kid ðŸ˜’", 400);
+        } else if ($request === true) {
             return $this->successResponse("Quest successfully submitted", 201);
-        } else if ($request == 'undone') {
-            return $this->errorResponse("Quest not done, smart kid 😒", 400);
-        } else {
+        } else if ($request === false){
             return $this->errorResponse("Quest already submitted", 400);
         }
     }
@@ -111,7 +111,7 @@ class QuestController extends Controller
     {
         $request = $questService->eventRegistration();
         
-        if ($request == true) {
+        if ($request === true) {
             return $this->successResponse("Points for event quest receded successfully");
         } else {
             return $this->errorResponse("No unverified event quest.", 400);

@@ -41,5 +41,24 @@ class LeaderboardService
         ];
         return $response;
     }
+
+    public function check ()
+    {
+        $users = User::all();
+
+        foreach ($users as $key => $user) {
+            $referrals = User::where('referrer_code', $user->referral_code)->get();
+            foreach ($referrals as $key => $referral) {
+                $points = UserPoint::where('user_id', $referral->id)->first();
+                if ($points->point < 20000) {
+                    $referrer_points = UserPoint::where('user_id', $user->id)->first();
+                    $referrer_points->decrement('point', 2000);
+                    $referral->forceDelete();
+                    return true;
+                }
+                return false;
+            }
+        }
+    }
 }
 
