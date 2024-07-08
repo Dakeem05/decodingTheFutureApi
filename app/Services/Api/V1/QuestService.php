@@ -80,42 +80,45 @@ class QuestService
             // Find the quest
             $quest = Quest::findOrFail($data->quest_id);
 
+            $user = User::findOrFail($user_id);
             // Special handling for quest with ID 2
-            if ($quest->id == 2) {
-                // Find the user
-                $user = User::findOrFail($user_id);
+            // if ($quest->id == 2) {
+            //     // Find the user
+            //     $user = User::findOrFail($user_id);
 
-                // Check if the user has done the specific event registration
-                $has_done = EventRegistration::where('email', $user->email)->exists();
+            //     // Check if the user has done the specific event registration
+            //     $has_done = EventRegistration::where('email', $user->email)->exists();
 
-                if (!$has_done) {
-                    // Rollback transaction and return 'undone' if the user hasn't done the event registration
-                    DB::rollBack();
-                    return 'undone';
-                }
-            }
+            //     if (!$has_done) {
+            //         // Rollback transaction and return 'undone' if the user hasn't done the event registration
+            //         DB::rollBack();
+            //         return 'undone';
+            //     }
+            // }
 
             // Find or create the UserPoint record
             $userpoint = UserPoint::firstOrCreate(['user_id' => $user_id]);
 
             // Update user points
             $userpoint->increment('point', $quest->point);
-            if($user->referrer_code == null){
-                // return true;
-            } else {
-                $this->rewardReferrer($user->referrer_code);
-                $userpoint->update([
-                    'referral_counted_at' => Carbon::now()
-                ]);
-                // return true;
-            }
+            
             // Create the UserQuest record
             UserQuest::create([
                 'user_id' => $user_id,
                 'quest_id' => $data->quest_id,
                 'proof' => $data->proof,
             ]);
-
+            if ($userpoint->point >= 40000) {
+                if($user->referrer_code == null){
+                    // return true;
+                } else {
+                    $this->rewardReferrer($user->referrer_code);
+                    $userpoint->update([
+                        'referral_counted_at' => Carbon::now()
+                    ]);
+                    // return true;
+                }
+            }
             // Commit the transaction
             DB::commit();
             return true;
