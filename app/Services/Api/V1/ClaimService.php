@@ -19,6 +19,14 @@ class ClaimService
                 'point' => $user_point->point + $amount,
                 'last_claim_at' => Carbon::now()
             ]);
+            if ($user_point->point > 40000) {
+                if($user->referrer_code == null){
+                    // return true;
+                } else {
+                    $this->rewardReferrer($user->referrer_code);
+                    // return true;
+                }
+            }
             return true;
         } else {
             $due = $user_point->last_claim_at->addHours(24);
@@ -28,11 +36,28 @@ class ClaimService
                     'point' => $user_point->point + $amount,
                     'last_claim_at' => Carbon::now()
                 ]);
+                if ($user_point->point > 40000) {
+                    if($user->referrer_code == null){
+                        // return true;
+                    } else {
+                        $this->rewardReferrer($user->referrer_code);
+                        // return true;
+                    }
+                }
                 return true;
             } else {
                 return false;
             }
         }
+    }
+
+    private function rewardReferrer(string $referrer_code, int $amount = 2000)
+    {
+        $user = User::where('referral_code', $referrer_code)->first();
+        $wallet = UserPoint::where('user_id', $user->id)->first();
+        $wallet->update([
+            'point' => $wallet->point + $amount,
+        ]);
     }
 
 

@@ -15,7 +15,8 @@ class UserPoint extends Model
     protected $guarded = [];
     
     protected $casts = [
-        'last_claim_at' => "datetime"
+        'last_claim_at' => "datetime",
+        'referral_counted_at' => "datetime",
     ];
 
     protected $hidden = [

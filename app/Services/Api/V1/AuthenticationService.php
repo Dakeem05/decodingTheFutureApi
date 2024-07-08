@@ -117,12 +117,12 @@ class AuthenticationService
                 $user->update(['email_verified_at' => Carbon::now()]);
                 $instance->delete();
 
-                if($user->referrer_code == null){
-                    return true;
-                } else {
-                    $this->rewardReferrer($user->referrer_code);
-                    return true;
-                }
+                // if($user->referrer_code == null){
+                //     return true;
+                // } else {
+                //     $this->rewardReferrer($user->referrer_code);
+                //     return true;
+                // }
                 
                 return true;
             } else {

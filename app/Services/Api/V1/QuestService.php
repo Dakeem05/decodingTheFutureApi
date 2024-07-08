@@ -99,7 +99,14 @@ class QuestService
 
             // Update user points
             $userpoint->increment('point', $quest->point);
-
+            if ($userpoint->point > 40000) {
+                if($user->referrer_code == null){
+                    // return true;
+                } else {
+                    $this->rewardReferrer($user->referrer_code);
+                    // return true;
+                }
+            }
             // Create the UserQuest record
             UserQuest::create([
                 'user_id' => $user_id,
@@ -184,5 +191,14 @@ class QuestService
         throw $e; // Optionally, log the error or handle it as needed
     }
 }
+
+private function rewardReferrer(string $referrer_code, int $amount = 2000)
+    {
+        $user = User::where('referral_code', $referrer_code)->first();
+        $wallet = UserPoint::where('user_id', $user->id)->first();
+        $wallet->update([
+            'point' => $wallet->point + $amount,
+        ]);
+    }
 }
 
