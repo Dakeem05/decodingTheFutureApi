@@ -21,7 +21,7 @@ class ClaimService
             ]);
             if ($user_point->point >= 40000) {
                 if($user->referrer_code !== null){
-                    if($user->referral_counted_at !== null){
+                    if($user->referral_counted_at == null){
                         $this->rewardReferrer($user->referrer_code);
                         $user_point->update([
                             'referral_counted_at' => Carbon::now()
@@ -41,7 +41,7 @@ class ClaimService
                 ]);
                 if ($user_point->point >= 40000) {
                     if($user->referrer_code !== null){
-                        if($user->referral_counted_at !== null){
+                        if($user->referral_counted_at == null){
                             $this->rewardReferrer($user->referrer_code);
                             $user_point->update([
                                 'referral_counted_at' => Carbon::now()
