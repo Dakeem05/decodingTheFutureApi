@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\UserPoint;
 use Illuminate\Support\Facades\DB;
 use App\Models\UserQuest;
+use Carbon\Carbon;
 
 class QuestService
 {
@@ -99,13 +100,14 @@ class QuestService
 
             // Update user points
             $userpoint->increment('point', $quest->point);
-            if ($userpoint->point > 40000) {
-                if($user->referrer_code == null){
-                    // return true;
-                } else {
-                    $this->rewardReferrer($user->referrer_code);
-                    // return true;
-                }
+            if($user->referrer_code == null){
+                // return true;
+            } else {
+                $this->rewardReferrer($user->referrer_code);
+                $userpoint->update([
+                    'referral_counted_at' => Carbon::now()
+                ]);
+                // return true;
             }
             // Create the UserQuest record
             UserQuest::create([

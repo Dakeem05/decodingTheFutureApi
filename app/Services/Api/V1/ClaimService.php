@@ -19,11 +19,14 @@ class ClaimService
                 'point' => $user_point->point + $amount,
                 'last_claim_at' => Carbon::now()
             ]);
-            if ($user_point->point > 40000) {
+            if ($user_point->point >= 40000) {
                 if($user->referrer_code == null){
                     // return true;
                 } else {
                     $this->rewardReferrer($user->referrer_code);
+                    $user_point->update([
+                        'referral_counted_at' => Carbon::now()
+                    ]);
                     // return true;
                 }
             }
@@ -36,11 +39,14 @@ class ClaimService
                     'point' => $user_point->point + $amount,
                     'last_claim_at' => Carbon::now()
                 ]);
-                if ($user_point->point > 40000) {
+                if ($user_point->point >= 40000) {
                     if($user->referrer_code == null){
                         // return true;
                     } else {
                         $this->rewardReferrer($user->referrer_code);
+                        $user_point->update([
+                            'referral_counted_at' => Carbon::now()
+                        ]);
                         // return true;
                     }
                 }

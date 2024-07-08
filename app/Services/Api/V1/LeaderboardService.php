@@ -62,12 +62,13 @@ class LeaderboardService
         // // }
         // }
         
-        $points = UserPoint::all();
+        $points = UserPoint::where('referral_counted_at', null)->get();
          foreach ($points as $key => $point) {
             $point->update([
                 'referral_counted_at' => Carbon::now()
             ]);
         }
+        return true;
         
         // $points = UserPoint::all();
         //  foreach ($points as $key => $point) {
