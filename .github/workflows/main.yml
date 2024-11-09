@@ -17,6 +17,27 @@ jobs:
         uses: actions/checkout@v2.3.2
       - name: Copy .env
         run: php -r "file_exists('.env') || copy('.env.example', '.env');"
+
+         # Corrected step to append GitHub secrets to the .env file with newlines
+      - name: Add Environment Variables to .env
+        run: |
+          echo "" >> .env  # Add a newline to avoid concatenation
+          echo "MAIL_MAILER=smtp" >> .env
+          echo "MAIL_HOST=${{ secrets.MAIL_HOST }}" >> .env
+          echo "MAIL_PORT=465" >> .env
+          echo "MAIL_USERNAME=${{ secrets.MAIL_USERNAME }}" >> .env
+          echo 'MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}"' >> .env
+          echo "MAIL_ENCRYPTION=TLS" >> .env
+          echo 'MAIL_FROM_ADDRESS="${{ secrets.MAIL_FROM_ADDRESS }}"' >> .env
+          echo "MAIL_FROM_NAME=DecodingTheFuture" >> .env
+          echo "" >> .env  # Add a newline to avoid concatenation
+          echo "DB_CONNECTION=mysql" >> .env
+          echo "DB_HOST=127.0.0.1" >> .env
+          echo "DB_PORT=3306" >> .env
+          echo "DB_DATABASE=${{ secrets.DB_DATABASE }}" >> .env
+          echo "DB_USERNAME=${{ secrets.DB_USERNAME }}" >> .env
+          echo "DB_PASSWORD=${{ secrets.DB_PASSWORD }}" >> .env
+
       - name: Install Dependencies
         run: composer update --ignore-platform-reqs
       - name: Generate key
